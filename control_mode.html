@@ -121,7 +121,7 @@
         img.width = 300;
         img.height = 300;
 		++imageNr;
-        img.src = "/video/snapshot";
+        img.src = "/video/snapshot?"+imageNr;
         var video_content = document.getElementById("video_content");
         video_content.insertBefore(img, video_content.firstChild);
       }
