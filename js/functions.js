@@ -129,3 +129,9 @@ function update_values(values){
 		}
 	}
 }
+function play_motion(motion_name){
+	$.get("/behav/walk", {motion:motion_name});
+};
+function play_action(action_id){
+	$.get("/behav/action", {id:action_id});
+};

@@ -9,6 +9,7 @@
     <script src="js/jquery-ui-1.9.2.custom.js"></script>
 	<script src="js/functions.js"></script>
 	<script>
+		var key_is_down = false;
 		$(function(){
 			$("button").button();
 			$("button").width(100);
@@ -36,8 +37,58 @@
 			});
 		});
 		$(document).keydown(function(event){
+			if (key_is_down) return;
+			key_is_down = true;
+			keycode = event.keyCode;
 			$user_output = document.getElementById("user_output");
-			update_output($user_output, "Key pressed : "+event.keyCode+".");
+			switch(keycode){
+				case 87://W
+					is_walking = !is_walking;
+					play_motion("forward");
+					update_output($user_output, "Key pressed : go forward.");
+					break;
+				case 83://S
+					is_walking = !is_walking;
+					play_motion("backward");
+					update_output($user_output, "Key pressed : go backward.");
+					break;
+				case 65://A
+					is_walking = !is_walking;
+					play_motion("left");
+					update_output($user_output, "Key pressed : go left.");
+					break;
+				case 68://D
+					is_walking = !is_walking;
+					play_motion("right");
+					update_output($user_output, "Key pressed : go right.");
+					break;
+				case 81://Q
+					is_walking = !is_walking;
+					play_motion("turnleft");
+					update_output($user_output, "Key pressed : turn left.");
+					break;
+				case 69://E
+					is_walking = !is_walking;
+					play_motion("turnright");
+					update_output($user_output, "Key pressed : turn right.");
+					break;
+				case 32://space
+					is_walking = !is_walking;
+					if (is_walking){
+						play_motion("stepping");
+						update_output($user_output, "Key pressed : step.");
+					}else{
+						$.get("/behav/stop-walk");
+						update_output($user_output, "Key pressed : stop.");
+					}
+					break;
+				default:
+					break;
+			};
+			//update_output($user_output, keycode);
+		});
+		$(document).keyup(function(event){
+			key_is_down = false;
 		});
 		$("#loading_screen").ready(function(){
 			$("#loading_screen").hide("blind");
@@ -122,8 +173,14 @@
 									</td>
 								</tr>
 								<tr>
-									<td colspan="3" align="center">
+									<td align="center">
+										<button>Turn L</button>
+									</td>
+									<td align="center">
 										<button>Forward</button>
+									</td>
+									<td align="center">
+										<button>Turn R</button>
 									</td>
 								</tr>
 								<tr>
