@@ -29,9 +29,6 @@
 				}
 			});
 			$(".spinner").spinner({
-				step:0.1,
-				min:0,
-				max:100,
 				numberFormat:"n1",
 				spin:function(event, ui){
 					slider_name = "#"+this.id.split("_")[0]+"_slider";
@@ -83,14 +80,26 @@
 			});
 		});
 		$("#loading_screen").ready(function(){
-			jqxhr = $.get("/walk/get-parset-n", function(data){
+			$.get("/walk/get-parset-n", function(data){
 				for (i = 1 ; i < data ; i++){
 					$("#configuration_list").append("<li class='ui-widget-content'>Conf "+i+"</li>");
+				}
+			});
+			$.get("/walk/get-max-n-min", function(data){
+				min = data[0];
+				max = data[1];
+				for (i = 1; i < 19 ; i++){
+					$("#para"+i+"_value").spinner("option", "min", min[i]);
+					$("#para"+i+"_value").spinner("option", "max", max[i]);
+					$("#para"+i+"_slider").slider("option", "min", min[i]);
+					$("#para"+i+"_slider").slider("option", "max", max[i]);
+					$("#para"+i+"_value").spinner("option", "step", (max[i]-min[i])/1000.0);
+					$("#para"+i+"_slider").slider("option", "step", (max[i]-min[i])/1000.0);
 				}
 			}).success(function(){
 				$("#loading_screen").hide("blind");
 				$("#content").show("blind");
-			});
+			})
 		});
 	</script>
 </head>
