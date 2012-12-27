@@ -102,7 +102,7 @@
 			key_is_down = false;
 		});
 		$("#loading_screen").ready(function(){
-			$.get("/behav/is-running", function(data){
+			$.get("", function(data){
 				is_walking = data;
 			}).success(function(){
 				$("#loading_screen").hide("blind");
@@ -180,7 +180,7 @@
 							<table>
 								<tr>
 									<td colspan="3" align="center">
-										<h2 style="margin-top:0px">Basic Control</h2>
+										<h2>Basic Control</h2>
 									</td>
 								</tr>
 								<tr>
@@ -213,23 +213,23 @@
 								</tr>
 								<tr>
 									<td colspan="3" align="center">
-										<h2>Head Control</h2>
+										<h2>Speed up</h2>
 									</td>
 								</tr>
 								<tr>
 									<td align="center" colspan="3">
-										<button title="Shortcut : up" onclick="head_motion('up')">Up</button>
+										<button onclick="speed_up('x',5)">↑</button>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<button title="Shortcut : left" onclick="head_motion('left')">Left</button>
+										<button onclick="speed_up('y',5)">←</button>
 									</td>
 									<td>
-										<button title="Shortcut : down" onclick="head_motion('down')">Down</button>
+										<button onclick="speed_up('x',-5)">↓</button>
 									</td>
 									<td>
-										<button title="Shortcut : right" onclick="head_motion('right')">Right</button>
+										<button onclick="speed_up('y',-5)">→</button>
 									</td>
 								</tr>
 							</table>		
@@ -251,24 +251,24 @@
 									</tr>
 									<tr align="center">
 										<td>
-											<button onclick="play_action(13)">Left kick</button>
+											<button onclick="play_action(13)">L kick</button>
 										</td>
 										<td>
-											<button onclick="play_action(71)">Left pass</button>
+											<button onclick="play_action(71)">L pass</button>
 										</td>
 										<td>
-											<button onclick="play_action(15)">Sit down</button>
+											<button onclick="play_action(15)">Sit</button>
 										</td>
 									</tr>
 									<tr>
 										<td>
-											<button onclick="play_action(12)">Right kick</button>
+											<button onclick="play_action(12)">R kick</button>
 										</td>
 										<td>
-											<button onclick="play_action(70)">Right pass</button>
+											<button onclick="play_action(70)">R pass</button>
 										</td>
 										<td>
-											<button onclick="play_action(16)">Stand up</button>
+											<button onclick="play_action(16)">Stand</button>
 										</td>
 									</tr>
 								</table>	
@@ -277,6 +277,31 @@
 								Action No : 
 								<input class="spinner" id="action_input"/>	
 								<button onclick="play_action('get_from_input')">Play!</button>
+							</div>
+							<div>
+								<table>
+									<tr>
+										<td colspan="3" align="center">
+											<h2>Head Control</h2>
+										</td>
+									</tr>
+									<tr>
+										<td align="center" colspan="3">
+											<button title="Shortcut : up" onclick="head_motion('up')">Up</button>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<button title="Shortcut : left" onclick="head_motion('left')">Left</button>
+										</td>
+										<td>
+											<button title="Shortcut : down" onclick="head_motion('down')">Down</button>
+										</td>
+										<td>
+											<button title="Shortcut : right" onclick="head_motion('right')">Right</button>
+										</td>
+									</tr>
+								</table>
 							</div>
 						</div>
 					</td>

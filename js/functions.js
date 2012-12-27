@@ -141,7 +141,12 @@ function play_motion(motion_name){
 function head_motion(motion_name){
 	$user_output = document.getElementById("user_output");
 	update_output($user_output, "Head : "+motion_name);
-	$.get("/head/"+motion_name);
+	$.get("/head/"+motion_name, function(data){
+		x = data[0];
+		y = data[1];
+		$system_output = document.getElementById("system_output");
+		update_output($system_output, "Head position : "+x+","+y);
+	}, "json");
 };
 function play_action(action_id){
 	$user_output = document.getElementById("user_output");
@@ -154,4 +159,7 @@ function play_action(action_id){
 		$.get("/behav/action", {id:action_id});
 		update_output($user_output, "Action : "+action_id);
 	};
+};
+function speed_up(direction, value){
+	$.get("/behav/speed-up", {direction:value});
 };
