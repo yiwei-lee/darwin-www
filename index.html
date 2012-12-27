@@ -98,10 +98,13 @@
 					$("#para"+i+"_value").spinner("value", min[i-1]);
 					$("#para"+i+"_slider").slider("value", min[i-1]);
 				}
-			}, "json").success(function(){
 				$("#loading_screen").hide("blind");
 				$("#content").show("blind");
-			})
+			}, "json").success(function(){
+				alart("Successfully initialized.");
+			}).error(function(){
+				alart("Failed to initialize.");
+			});
 		});
 	</script>
 </head>
