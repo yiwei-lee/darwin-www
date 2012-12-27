@@ -81,6 +81,18 @@
 						play_motion("stop");
 					}
 					break;
+				case 38://up
+					play_motion("turnright");
+					break;
+				case 37://left
+					play_motion("turnright");
+					break;
+				case 40://down
+					play_motion("turnright");
+					break;
+				case 39://right
+					play_motion("turnright");
+					break;
 				default:
 					break;
 			};
@@ -90,7 +102,7 @@
 			key_is_down = false;
 		});
 		$("#loading_screen").ready(function(){
-			$.get("/behav/is-walking", function(data){
+			$.get("/behav/is-running", function(data){
 				is_walking = data;
 			}).success(function(){
 				$("#loading_screen").hide("blind");
@@ -144,7 +156,7 @@
     </script>
 </head>
 
-<body onload="createImageLayer();">
+<body onload="createImageLayer();" style="overflow:hidden;">
 	<div id="container">
 		<div id="header">
 			<h1>Darwin Controller v0.1</h1>
@@ -168,7 +180,7 @@
 							<table>
 								<tr>
 									<td colspan="3" align="center">
-										<h2>Basic Control</h2>
+										<h2 style="margin-top:0px">Basic Control</h2>
 									</td>
 								</tr>
 								<tr>
@@ -197,6 +209,27 @@
 									<td align="center" colspan="3">
 										<button id="step" onclick="play_motion('stepping')">Step</button>
 										<button id="stop" onclick="play_motion('stop')">Stop</button>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" align="center">
+										<h2>Head Control</h2>
+									</td>
+								</tr>
+								<tr>
+									<td align="center" colspan="3">
+										<button title="Shortcut : up" onclick="head_motion('up')">Up</button>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<button title="Shortcut : left" onclick="play_motion('left')">Left</button>
+									</td>
+									<td>
+										<button title="Shortcut : down" onclick="play_motion('backward')">Down</button>
+									</td>
+									<td>
+										<button title="Shortcut : right" onclick="play_motion('right')">Right</button>
 									</td>
 								</tr>
 							</table>		
