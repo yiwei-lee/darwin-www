@@ -82,16 +82,16 @@
 					}
 					break;
 				case 38://up
-					play_motion("turnright");
+					head_motion("up");
 					break;
 				case 37://left
-					play_motion("turnright");
+					head_motion("left");
 					break;
 				case 40://down
-					play_motion("turnright");
+					head_motion("down");
 					break;
 				case 39://right
-					play_motion("turnright");
+					head_motion("right");
 					break;
 				default:
 					break;
@@ -223,13 +223,13 @@
 								</tr>
 								<tr>
 									<td>
-										<button title="Shortcut : left" onclick="play_motion('left')">Left</button>
+										<button title="Shortcut : left" onclick="head_motion('left')">Left</button>
 									</td>
 									<td>
-										<button title="Shortcut : down" onclick="play_motion('backward')">Down</button>
+										<button title="Shortcut : down" onclick="head_motion('down')">Down</button>
 									</td>
 									<td>
-										<button title="Shortcut : right" onclick="play_motion('right')">Right</button>
+										<button title="Shortcut : right" onclick="head_motion('right')">Right</button>
 									</td>
 								</tr>
 							</table>		

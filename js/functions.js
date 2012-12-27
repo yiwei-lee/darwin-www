@@ -141,6 +141,7 @@ function play_motion(motion_name){
 function head_motion(motion_name){
 	$user_output = document.getElementById("user_output");
 	update_output($user_output, "Head : "+motion_name);
+	$.get("/head/"+motion_name);
 };
 function play_action(action_id){
 	$user_output = document.getElementById("user_output");
