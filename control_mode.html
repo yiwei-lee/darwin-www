@@ -90,7 +90,7 @@
 			key_is_down = false;
 		});
 		$("#loading_screen").ready(function(){
-			$.get("/behav/is-running", function(data){
+			$.get("", function(data){
 				is_walking = data;
 			}).success(function(){
 				$("#loading_screen").hide("blind");
@@ -110,7 +110,6 @@
       var imageNr = 0; // Serial number of current image
       var finished = new Array(); // References to img objects which have finished downloading
       var paused = false;
-      var previous_time = new Date();
 
       function createImageLayer() {
         var img = new Image();
@@ -134,12 +133,7 @@
           del.parentNode.removeChild(del);
         }
         finished.push(this);
-        current_time = new Date();
-        delta = current_time.getTime() - previous_time.getTime();
-        fps   = (1000.0 / delta).toFixed(3);
-        document.getElementById('info').firstChild.nodeValue = delta + " ms (" + fps + " fps)";
-        previous_time = current_time;
-        if (!paused) createImageLayer();
+        if (!paused) setTimeout(createImageLayer(), 200);
       }
 
       function imageOnclick() { // Clicking on the image will pause the stream
