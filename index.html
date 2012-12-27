@@ -85,7 +85,7 @@
 					$("#configuration_list").append("<li class='ui-widget-content'>Conf "+i+"</li>");
 				}
 			});
-			$.get("/walk/get-max-n-min", function(data){
+			$.get("/walk/get-par-minmax", function(data){
 				min = data[0];
 				max = data[1];
 				for (i = 1; i < 19 ; i++){
