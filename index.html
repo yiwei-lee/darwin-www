@@ -84,10 +84,9 @@
 				for (i = 1 ; i <= data ; i++){
 					$("#configuration_list").append("<li class='ui-widget-content'>Conf "+i+"</li>");
 				}
-			});
+			}, "json");
 			$.get("/walk/get-par-minmax", function(data){
 				min = data[0];
-				//ddd;
 				max = data[1];
 				for (i = 1; i < 19 ; i++){
 					$("#para"+i+"_value").spinner("option", "min", min[i-1]);
@@ -99,7 +98,7 @@
 					$("#para"+i+"_value").spinner("value", min[i-1]);
 					$("#para"+i+"_slider").slider("value", min[i-1]);
 				}
-			}).success(function(){
+			}, "json").success(function(){
 				$("#loading_screen").hide("blind");
 				$("#content").show("blind");
 			})
