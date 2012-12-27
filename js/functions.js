@@ -117,7 +117,7 @@ function update_output(output_box, message){
 	output_box.scrollTop = output_box.scrollHeight;
 }
 function update_values(values){
-	if (values == NULL){
+	if (values == null){
 		for (i = 1; i < 19 ; i++){
 			$("#para"+i+"_value").spinner("value", current_conf[i-1]);
 			$("#para"+i+"_slider").slider("value", current_conf[i-1]);

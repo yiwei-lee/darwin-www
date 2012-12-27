@@ -35,7 +35,7 @@
 			});
 		});
 		$("#loading_screen").ready(function(){
-			jqxhr = $.get("/control/init").success(function(){
+			jqxhr = $.get("/control/init").error(function(){
 				$("#loading_screen").hide("blind");
 				$("#content").show("blind");
 			});
