@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="css/custom-theme/jquery-ui-1.9.2.custom.min.css"/>
     <script src="js/jquery-1.8.3.js"></script>
     <script src="js/jquery-ui-1.9.2.custom.js"></script>
+	<script src="js/functions.js"></script>
 	<script>
 		$(function(){
 			$("button").button();
@@ -34,11 +35,13 @@
 				$this.stop().animate({backgroundColor: hoverTextColor}, animSpeed);
 			});
 		});
+		$(document).keydown(function(event){
+			$user_output = document.getElementById("user_output");
+			update_output($user_output, "Key pressed : "+event.keyCode+".");
+		});
 		$("#loading_screen").ready(function(){
-			jqxhr = $.get("/control/init").error(function(){
-				$("#loading_screen").hide("blind");
-				$("#content").show("blind");
-			});
+			$("#loading_screen").hide("blind");
+			$("#content").show("blind");
 		});
 	</script>
     <script type="text/javascript">
@@ -107,8 +110,8 @@
 		<div id="loading_screen" align="center" style="margin:10px; color:gray">
 			<h1>Loading...</h1>
 		</div>
-		<div id="content">
-			<table style="margin:auto;" cellpadding="4px">
+		<div id="content" style="background:#808080;">
+			<table style="margin:auto; background:white;" cellpadding="4px">
 				<tr>
 					<td>
 						<div id="basic_control" style="float:left;">
@@ -211,7 +214,7 @@
 				</tr>
 			</table>
 			<div class="clear"></div>
-			<div style="border-top:1px solid gray; padding:0px; overflow:auto;">
+			<div style="border-top:1px solid gray; padding:0px; overflow:auto; background:white;">
 				<div style="float:left; width:49%; padding:4px; border-right:1px solid gray; margin:0px">
 					System Output:<br/>
 					<textarea id="system_output" readonly style="overflow:hidden;"></textarea>
