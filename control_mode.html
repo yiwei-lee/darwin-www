@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Darwin Controller</title>
+	<link rel="stylesheet" href="css/layout.css" type="text/css" />
+	<link rel="stylesheet" href="css/custom-theme/jquery-ui-1.9.2.custom.min.css"/>
+    <script src="js/jquery-1.8.3.js"></script>
+    <script src="js/jquery-ui-1.9.2.custom.js"></script>
+	<script>
+		$(function(){
+			$("button").button();
+			$("button").width(100);
+			$("#content").hide();
+		});
+		$(document).ready(function(){
+			$menu_li = $("#menu li");
+			$menu_li_a = $("#menu li a[href!='#']");
+			var animSpeed=256;
+			var hoverTextColor="#ffffff";
+			var hoverBackgroundColor="#808080";
+			$menu_li_a.hover(function() {
+				var $this=$(this);
+				$this.stop().animate({color: hoverTextColor}, animSpeed);
+			},function(){
+				var $this=$(this);
+				$this.stop().animate({color: hoverBackgroundColor}, animSpeed);
+			});
+			$menu_li.hover(function() {
+				var $this=$(this);
+				$this.stop().animate({backgroundColor: hoverBackgroundColor}, animSpeed);
+			},function() {
+				var $this=$(this);
+				$this.stop().animate({backgroundColor: hoverTextColor}, animSpeed);
+			});
+		});
+		$("#loading_screen").ready(function(){
+			jqxhr = $.get("/control/init").success(function(){
+				$("#loading_screen").hide("blind");
+				$("#content").show("blind");
+			});
+		});
+	</script>
+    <script type="text/javascript">
+
+      /* Copyright (C) 2007 Richard Atterer, richardÂ©atterer.net
+       * This program is free software; you can redistribute it and/or modify it
+       * under the terms of the GNU General Public License, version 2. See the file
+       * COPYING for details.
+       */
+
+      var imageNr = 0; // Serial number of current image
+      var finished = new Array(); // References to img objects which have finished downloading
+      var paused = false;
+      var previous_time = new Date();
+
+      function createImageLayer() {
+        var img = new Image();
+        img.style.position = "absolute";
+        img.style.zIndex = -1;
+        img.onload = imageOnload;
+        img.onclick = imageOnclick;
+        img.width = 300;
+        img.height = 300;
+        img.src = "/?action=snapshot&n=" + (++imageNr);
+        var video_content = document.getElementById("video_content");
+        video_content.insertBefore(img, video_content.firstChild);
+      }
+
+      // Two layers are always present (except at the very beginning), to avoid flicker
+      function imageOnload() {
+        this.style.zIndex = imageNr; // Image finished, bring to front!
+        while (1 < finished.length) {
+          var del = finished.shift(); // Delete old image(s) from document
+          del.parentNode.removeChild(del);
+        }
+        finished.push(this);
+        current_time = new Date();
+        delta = current_time.getTime() - previous_time.getTime();
+        fps   = (1000.0 / delta).toFixed(3);
+        document.getElementById('info').firstChild.nodeValue = delta + " ms (" + fps + " fps)";
+        previous_time = current_time;
+        if (!paused) createImageLayer();
+      }
+
+      function imageOnclick() { // Clicking on the image will pause the stream
+        paused = !paused;
+        if (!paused) createImageLayer();
+      }
+
+    </script>
+</head>
+
+<body onload="createImageLayer();">
+	<div id="container">
+		<div id="header">
+			<h1>Darwin Controller v0.1</h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><a href="./index.html">Tuning Mode</a></li>
+				<li><a href="./action_mode.html">Action Mode</a></li>
+				<li><a href="#" style="color:white; background:gray;">Control Mode</a></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div id="loading_screen" align="center" style="margin:10px; color:gray">
+			<h1>Loading...</h1>
+		</div>
+		<div id="content">
+			<table style="margin:auto;" cellpadding="4px">
+				<tr>
+					<td>
+						<div id="basic_control" style="float:left;">
+							<table>
+								<tr>
+									<td colspan="3" align="center">
+										<h2>Basic Control</h2>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" align="center">
+										<button>Forward</button>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<button>Go left</button>
+									</td>
+									<td>
+										<button>Backward</button>
+									</td>
+									<td>
+										<button>Go right</button>
+									</td>
+								</tr>
+							</table>		
+						</div>
+					</td>
+					<td style="border-right:1px solid gray; border-left:1px solid gray;">
+						<div id="video_content" style="padding:4px; width:300px; height:300px; float:left;">
+							<img src="/?action=snapshot" width="300px" height="300px"/>
+						</div>
+					</td>
+					<td>
+						<div id="advanced_control">
+							<div id="special_moves">
+								<table>
+									<tr>
+										<td colspan="3" align="center">
+											<h2>Basic Control</h2>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<button>↑</button>
+										</td>
+										<td>
+											<button>↑</button>
+										</td>
+										<td>
+											<button>↑</button>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<button>←</button>
+										</td>
+										<td>
+											<button>↓</button>
+										</td>
+										<td>
+											<button>→</button>
+										</td>
+									</tr>
+								</table>	
+							</div>
+							<div id="special_moves2">
+								<table>
+									<tr>
+										<td colspan="3" align="center">
+											<h2>Basic Control</h2>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<button>↑</button>
+										</td>
+										<td>
+											<button>↑</button>
+										</td>
+										<td>
+											<button>↑</button>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<button>←</button>
+										</td>
+										<td>
+											<button>↓</button>
+										</td>
+										<td>
+											<button>→</button>
+										</td>
+									</tr>
+								</table>	
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div class="clear"></div>
+			<div style="border-top:1px solid gray; padding:0px; overflow:auto;">
+				<div style="float:left; width:49%; padding:4px; border-right:1px solid gray; margin:0px">
+					System Output:<br/>
+					<textarea id="system_output" readonly style="overflow:hidden;"></textarea>
+				</div>
+				<div style="float:left; width:49%; padding:4px; margin-left:3px">
+					User Output:<br/>
+					<textarea id="user_output" readonly style="overflow:hidden;"></textarea>
+				</div>
+			</div>
+		</div>
+		<div id="footer">Copyright 2012 by Room301</div>
+	</div>
+</body>
+</html>
