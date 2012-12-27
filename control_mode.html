@@ -120,7 +120,7 @@
         img.width = 300;
         img.height = 300;
 		++imageNr;
-        img.src = "/video/snapshot?"+imageNr;
+        img.src = "http://192.168.1.100:8080/?action=snapshot&n="+imageNr;
         var video_content = document.getElementById("video_content");
         video_content.insertBefore(img, video_content.firstChild);
       }
@@ -133,7 +133,7 @@
           del.parentNode.removeChild(del);
         }
         finished.push(this);
-        if (!paused) setTimeout(createImageLayer(), 200);
+        if (!paused) createImageLayer();
       }
 
       function imageOnclick() { // Clicking on the image will pause the stream
@@ -204,7 +204,7 @@
 					</td>
 					<td style="border-right:1px solid gray; border-left:1px solid gray;">
 						<div id="video_content" style="padding:4px; width:300px; height:300px; float:left;">
-							<img src="/video/snapshot" width="300px" height="300px"/>
+							<img src="http://192.168.1.100:8080/?action=snapshot" width="300px" height="300px"/>
 						</div>
 					</td>
 					<td>
