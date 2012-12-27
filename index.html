@@ -29,7 +29,7 @@
 				}
 			});
 			$(".spinner").spinner({
-				numberFormat:"n1",
+				numberFormat:"n",
 				spin:function(event, ui){
 					slider_name = "#"+this.id.split("_")[0]+"_slider";
 					$(slider_name).slider("value", ui.value);
