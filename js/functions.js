@@ -46,7 +46,7 @@ function reset_attrs(){
 	$.get("/walk/load-parset", function(data){
 		changed_conf = current_conf = data.concat();
 		update_values();
-	}).success(function(){
+	}, "json").success(function(){
 		$user_output = document.getElementById("user_output");
 		update_output($user_output, "Configuration reset.");
 	});
