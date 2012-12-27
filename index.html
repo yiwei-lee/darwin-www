@@ -81,7 +81,7 @@
 		});
 		$("#loading_screen").ready(function(){
 			$.get("/walk/get-parset-n", function(data){
-				for (i = 1 ; i < data ; i++){
+				for (i = 1 ; i <= data ; i++){
 					$("#configuration_list").append("<li class='ui-widget-content'>Conf "+i+"</li>");
 				}
 			});
@@ -90,12 +90,14 @@
 				//ddd;
 				max = data[1];
 				for (i = 1; i < 19 ; i++){
-					$("#para"+i+"_value").spinner("option", "min", min[i]);
-					$("#para"+i+"_value").spinner("option", "max", max[i]);
-					$("#para"+i+"_slider").slider("option", "min", min[i]);
-					$("#para"+i+"_slider").slider("option", "max", max[i]);
-					$("#para"+i+"_value").spinner("option", "step", (max[i]-min[i])/1000.0);
-					$("#para"+i+"_slider").slider("option", "step", (max[i]-min[i])/1000.0);
+					$("#para"+i+"_value").spinner("option", "min", min[i-1]);
+					$("#para"+i+"_value").spinner("option", "max", max[i-1]);
+					$("#para"+i+"_slider").slider("option", "min", min[i-1]);
+					$("#para"+i+"_slider").slider("option", "max", max[i-1]);
+					$("#para"+i+"_value").spinner("option", "step", (max[i-1]-min[i-1])/1000.0);
+					$("#para"+i+"_slider").slider("option", "step", (max[i-1]-min[i-1])/1000.0);
+					$("#para"+i+"_value").spinner("value", min[i-1]);
+					$("#para"+i+"_slider").slider("value", min[i-1]);
 				}
 			}).success(function(){
 				$("#loading_screen").hide("blind");
