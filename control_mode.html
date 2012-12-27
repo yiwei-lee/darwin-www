@@ -90,7 +90,7 @@
 			key_is_down = false;
 		});
 		$("#loading_screen").ready(function(){
-			$.get("", function(data){
+			$.get("/behav/is-walking", function(data){
 				is_walking = data;
 			}).success(function(){
 				$("#loading_screen").hide("blind");
