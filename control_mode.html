@@ -13,7 +13,15 @@
 		$(function(){
 			$("button").button();
 			$("button").width(100);
+			$("#step").width(150);
+			$("#stop").width(150);
 			$("#content").hide();
+			$(".spinner").spinner({
+				min:0,
+				max:255,
+				step:1
+			});
+			$(".spinner").width(60);
 		});
 		$(document).ready(function(){
 			$menu_li = $("#menu li");
@@ -40,46 +48,37 @@
 			if (key_is_down) return;
 			key_is_down = true;
 			keycode = event.keyCode;
-			$user_output = document.getElementById("user_output");
 			switch(keycode){
 				case 87://W
 					is_walking = !is_walking;
 					play_motion("forward");
-					update_output($user_output, "Key pressed : go forward.");
 					break;
 				case 83://S
 					is_walking = !is_walking;
 					play_motion("backward");
-					update_output($user_output, "Key pressed : go backward.");
 					break;
 				case 65://A
 					is_walking = !is_walking;
 					play_motion("left");
-					update_output($user_output, "Key pressed : go left.");
 					break;
 				case 68://D
 					is_walking = !is_walking;
 					play_motion("right");
-					update_output($user_output, "Key pressed : go right.");
 					break;
 				case 81://Q
 					is_walking = !is_walking;
 					play_motion("turnleft");
-					update_output($user_output, "Key pressed : turn left.");
 					break;
 				case 69://E
 					is_walking = !is_walking;
 					play_motion("turnright");
-					update_output($user_output, "Key pressed : turn right.");
 					break;
 				case 32://space
 					is_walking = !is_walking;
 					if (is_walking){
 						play_motion("stepping");
-						update_output($user_output, "Key pressed : step.");
 					}else{
-						$.get("/behav/stop-walk");
-						update_output($user_output, "Key pressed : stop.");
+						play_motion("stop");
 					}
 					break;
 				default:
@@ -91,9 +90,14 @@
 			key_is_down = false;
 		});
 		$("#loading_screen").ready(function(){
-			$("#loading_screen").hide("blind");
-			$("#content").show("blind");
+			$.get("", function(data){
+				is_walking = data;
+			}).success(function(){
+				$("#loading_screen").hide("blind");
+				$("#content").show("blind");
+			});
 		});
+		$(document).tooltip();
 	</script>
     <script type="text/javascript">
 
@@ -174,24 +178,30 @@
 								</tr>
 								<tr>
 									<td align="center">
-										<button>Turn L</button>
+										<button title="Shortcut : Q" onclick="play_motion('turnleft')">Turn L</button>
 									</td>
 									<td align="center">
-										<button>Forward</button>
+										<button title="Shortcut : W" onclick="play_motion('forward')">Forward</button>
 									</td>
 									<td align="center">
-										<button>Turn R</button>
+										<button title="Shortcut : E" onclick="play_motion('turnright')">Turn R</button>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<button>Go left</button>
+										<button title="Shortcut : A" onclick="play_motion('left')">Go left</button>
 									</td>
 									<td>
-										<button>Backward</button>
+										<button title="Shortcut : S" onclick="play_motion('backward')">Backward</button>
 									</td>
 									<td>
-										<button>Go right</button>
+										<button title="Shortcut : D" onclick="play_motion('right')">Go right</button>
+									</td>
+								</tr>
+								<tr>
+									<td align="center" colspan="3">
+										<button id="step" onclick="play_motion('stepping')">Step</button>
+										<button id="stop" onclick="play_motion('stop')">Stop</button>
 									</td>
 								</tr>
 							</table>		
@@ -208,63 +218,37 @@
 								<table>
 									<tr>
 										<td colspan="3" align="center">
-											<h2>Basic Control</h2>
+											<h2>Special Moves</h2>
 										</td>
 									</tr>
 									<tr align="center">
 										<td>
-											<button>↑</button>
+											<button onclick="play_action(13)">Left kick</button>
 										</td>
 										<td>
-											<button>↑</button>
+											<button onclick="play_action(71)">Left pass</button>
 										</td>
 										<td>
-											<button>↑</button>
+											<button onclick="play_action(15)">Sit down</button>
 										</td>
 									</tr>
 									<tr>
 										<td>
-											<button>←</button>
+											<button onclick="play_action(12)">Right kick</button>
 										</td>
 										<td>
-											<button>↓</button>
+											<button onclick="play_action(70)">Right pass</button>
 										</td>
 										<td>
-											<button>→</button>
+											<button onclick="play_action(16)">Stand up</button>
 										</td>
 									</tr>
 								</table>	
 							</div>
-							<div id="special_moves2">
-								<table>
-									<tr>
-										<td colspan="3" align="center">
-											<h2>Basic Control</h2>
-										</td>
-									</tr>
-									<tr align="center">
-										<td>
-											<button>↑</button>
-										</td>
-										<td>
-											<button>↑</button>
-										</td>
-										<td>
-											<button>↑</button>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<button>←</button>
-										</td>
-										<td>
-											<button>↓</button>
-										</td>
-										<td>
-											<button>→</button>
-										</td>
-									</tr>
-								</table>	
+							<div id="action_plays" align="center" style="padding:10px;">
+								Action No : 
+								<input class="spinner" id="action_input"/>	
+								<button onclick="play_action('get_from_input')">Play!</button>
 							</div>
 						</div>
 					</td>

@@ -130,8 +130,23 @@ function update_values(values){
 	}
 }
 function play_motion(motion_name){
-	$.get("/behav/walk", {motion:motion_name});
+	$user_output = document.getElementById("user_output");
+	update_output($user_output, "Motion : "+motion_name);
+	if (motion_name == "stop"){
+		$.get("/behav/stop-walk");
+	}else{
+		$.get("/behav/walk", {motion:motion_name});
+	}
 };
 function play_action(action_id){
-	$.get("/behav/action", {id:action_id});
+	$user_output = document.getElementById("user_output");
+	if (action_id == "get_from_input"){
+		actual_id = $("#action_input").spinner("value");
+		if (parseInt(actual_id) != actual_id) return;
+		$.get("/behav/action", {id:actual_id});
+		update_output($user_output, "Action : "+actual_id);
+	}else{
+		$.get("/behav/action", {id:action_id});
+		update_output($user_output, "Action : "+action_id);
+	};
 };
