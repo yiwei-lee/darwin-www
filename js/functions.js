@@ -161,7 +161,11 @@ function play_action(action_id){
 	};
 };
 function speed_up(direction, value){
-	$.get("/behav/speed-up", {direction:value});
+	if (direction == "x"){
+		$.get("/behav/speed-up", {x:value});
+	}else{
+		$.get("/behav/speed-up", {y:value});
+	}
 	$user_output = document.getElementById("user_output");
 	update_output($user_output, "Speed up : "+direction+","+value);
 };
