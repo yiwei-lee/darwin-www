@@ -162,4 +162,6 @@ function play_action(action_id){
 };
 function speed_up(direction, value){
 	$.get("/behav/speed-up", {direction:value});
+	$user_output = document.getElementById("user_output");
+	update_output($user_output, "Speed up : "+direction+","+value);
 };
