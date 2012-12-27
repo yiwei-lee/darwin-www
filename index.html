@@ -84,7 +84,7 @@
 				for (i = 1 ; i <= data ; i++){
 					$("#configuration_list").append("<li class='ui-widget-content'>Conf "+i+"</li>");
 				}
-			}, "json");
+			});
 			$.get("/walk/get-par-minmax", function(data){
 				min = data[0];
 				max = data[1];
