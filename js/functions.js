@@ -43,7 +43,7 @@ var engine_names =
 	"HEAD_PAN",
 	"HEAD_TILT"];
 function reset_attrs(){
-	$.get("192.168.2.100/walk/load-parset", function(data){
+	$.get("/walk/load-parset", function(data){
 		changed_conf = current_conf = data.concat();
 		update_values();
 	}).success(function(){
@@ -84,14 +84,14 @@ function save_conf(){
 	label = selected.html();
 	$system_output = document.getElementById("system_output");
 	update_output($system_output, "Save configuration to : "+label+".");
-	$.get("/walk/save-parset", {id:label.split(" ")[1]});
+	$.get("/walk/save-parset", {id:(label.split(" ")[1]-1)});
 	current_conf = changed_conf.concat();
 }
 function load_conf(conf_id){
 	label = $("#configuration_list .ui-selected").html();
 	$system_output = document.getElementById("system_output");
 	update_output($system_output, "Load configuration from : "+label+".");
-	$.get("/walk/load-parset", {id:conf_id}, function(data){
+	$.get("/walk/load-parset", {id:(conf_id-1)}, function(data){
 		changed_conf = current_conf = data.concat();
 		update_output($system_output, data);
 		update_values();
@@ -104,7 +104,7 @@ function del_conf(){
 	$system_output = document.getElementById("system_output");
 	update_output($system_output, "Configuration : "+label+" deleted.");
 	selected.remove();
-	$.get("/walk/del-parset", {id:label.split(" ")[1]});
+	$.get("/walk/del-parset", {id:(label.split(" ")[1]-1)});
 	$("#configuration_list li").each(function(){
 		$(this).html("Conf "+($(this).index()+1));
 	});

@@ -95,14 +95,11 @@
 					$("#para"+i+"_slider").slider("option", "max", max[i-1]);
 					$("#para"+i+"_value").spinner("option", "step", (max[i-1]-min[i-1])/1000.0);
 					$("#para"+i+"_slider").slider("option", "step", (max[i-1]-min[i-1])/1000.0);
-					$("#para"+i+"_value").spinner("value", min[i-1]);
-					$("#para"+i+"_slider").slider("value", min[i-1]);
-				}
+				};
+				reset_attrs();
 			}, "json").success(function(){
 				$("#loading_screen").hide("blind");
 				$("#content").show("blind");
-			}).error(function(){
-				alart("Failed to initialize.");
 			});
 		});
 	</script>
