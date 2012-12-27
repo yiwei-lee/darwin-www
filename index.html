@@ -87,6 +87,7 @@
 			});
 			$.get("/walk/get-par-minmax", function(data){
 				min = data[0];
+				//ddd;
 				max = data[1];
 				for (i = 1; i < 19 ; i++){
 					$("#para"+i+"_value").spinner("option", "min", min[i]);
